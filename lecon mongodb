@@ -1,0 +1,78 @@
+Utiliser à la fois PostgreSQL et MongoDB dans un projet Spring Boot n'est pas une tâche difficile, mais nécessite une certaine configuration. Voici les étapes générales pour y parvenir :
+
+Configurer les dépendances : Dans votre fichier pom.xml (si vous utilisez Maven) ou build.gradle (si vous utilisez Gradle), vous devrez ajouter les dépendances pour Spring Data JPA (pour PostgreSQL) et Spring Data MongoDB (pour MongoDB). Par exemple, pour Maven :
+  <dependencies>
+      <!-- Other dependencies -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-data-jpa</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-data-mongodb</artifactId>
+      </dependency>
+  </dependencies>
+Configurer les propriétés de connexion : Dans votre fichier application.properties ou application.yml, vous devrez configurer les URL de connexion, les noms d'utilisateur, les mots de passe et autres détails de connexion pour vos bases de données PostgreSQL et MongoDB.
+Créer des modèles et des dépôts : Pour chaque base de données, vous devrez créer des modèles de données (classes Java représentant vos entités de données) et des dépôts (interfaces pour effectuer des opérations CRUD sur vos entités). Par exemple, pour PostgreSQL, vous pouvez avoir un modèle User et un dépôt UserRepository :
+  @Entity
+  public class User {
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Long id;
+
+      // Other fields, getters and setters
+  }
+
+  public interface UserRepository extends JpaRepository<User, Long> {
+      // Query methods
+  }
+Et pour MongoDB, vous pouvez avoir un modèle Product et un dépôt ProductRepository :
+
+  @Document
+  public class Product {
+      @Id
+      private String id;
+
+      // Other fields, getters and setters
+  }
+
+  public interface ProductRepository extends MongoRepository<Product, String> {
+      // Query methods
+  }
+Utiliser les dépôts dans votre service : Enfin, dans votre service, vous pouvez injecter et utiliser vos dépôts pour effectuer des opérations sur vos bases de données.
+Notez que chaque base de données a ses propres caractéristiques et avantages. PostgreSQL est un excellent choix pour les applications transactionnelles complexes, tandis que MongoDB est très utile pour les applications nécessitant une grande flexibilité de schéma et une grande quantité de données semi-structurées. Il est donc important de comprendre ces différences lors de la conception de votre application 3, 4.
+
+
+
+
+
+
+
+
+
+Le fichier application.properties est utilisé dans les applications Spring Boot pour configurer les paramètres de l'application. Il permet de définir des propriétés telles que les informations de connexion à la base de données, les paramètres du serveur, les propriétés du système de fichiers, etc.
+
+Par exemple, si vous voulez utiliser PostgreSQL et MongoDB dans votre application Spring Boot, vous pouvez définir les informations de connexion à ces bases de données dans votre fichier application.properties :
+
+# PostgreSQL Configuration
+spring.datasource.url=jdbc:postgresql://localhost:5432/mydatabase
+spring.datasource.username=myuser
+spring.datasource.password=mypassword
+
+# MongoDB Configuration
+spring.data.mongodb.uri=mongodb://localhost:27017/mydatabase
+Vous pouvez également passer des propriétés directement depuis la ligne de commande ou via des variables d'environnement, comme indiqué dans 1.
+
+De plus, vous pouvez utiliser des annotations comme @Value pour injecter les valeurs de ces propriétés dans vos classes :
+
+@Value("${spring.datasource.url}")
+private String dbUrl;
+Ou utiliser l'API Environment pour obtenir la valeur d'une propriété :
+
+@Autowired
+private Environment env;
+
+public String getDbUrl(){
+   return env.getProperty("spring.datasource.url");
+}
+Si vous préférez utiliser un format plus lisible et plus structuré, vous pouvez également utiliser le fichier application.yml à la place de application.properties. Le format YML est un suprensemble de JSON et est souvent préféré pour sa lisibilité et sa facilité d'écriture pour les développeurs 3, 5.
