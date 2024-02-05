@@ -64,6 +64,7 @@ public class SecurityConfig {
               .requestMatchers("/tresorerie/**").permitAll()
               .requestMatchers("/drivetype/**").permitAll()
               .requestMatchers("/transmission/**").permitAll()
+              .requestMatchers("/notification/**").permitAll()
               // .requestMatchers(HttpMethod.GET, "/test/hello").permitAll()
 
               .anyRequest()
