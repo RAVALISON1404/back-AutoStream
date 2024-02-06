@@ -81,7 +81,7 @@ public class AnnonceController {
     // }
 
     @GetMapping("/entreprix")
-    public List<Annonce> getAnnoncesEntrePrix( @RequestParam("min") double min, @RequestParam("max") Double max) {
+    public List<Annonce> getAnnoncesEntrePrix( @RequestParam("min") double min, @RequestParam("max") double max) {
         return service.getAnnoncesEntrePrix(min, max);
     }
     
