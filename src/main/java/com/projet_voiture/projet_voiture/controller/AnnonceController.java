@@ -54,6 +54,36 @@ public class AnnonceController {
     public List<Annonce> getUnvalidatedAnnonces() throws IOException {
         return service.getUnvalidatedAnnonces();
     }
+
+    @GetMapping("/recentes")
+    public List<Annonce> getAnnoncesRecentes() {
+        return service.getAnnoncesRecentes();
+    }
+
+    @GetMapping("/anciennes")
+    public List<Annonce> getAnnoncesAnciennes() {
+        return service.getAnnoncesAnciennes();
+    }
+
+    // @GetMapping("/voituresanciennes")
+    // public List<Annonce> getAnnoncesVoituresAnciennes() {
+    //     return service.getAnnoncesVoituresAnciennes();
+    // }
+
+    // @GetMapping("/voituresrecentes")
+    // public List<Annonce> getAnnoncesVoituresRecentes() {
+    //     return service.getAnnoncesVoituresRecentes();
+    // }
+
+    // @GetMapping("/vedettes")
+    // public List<Annonce> getAnnoncesVedettes() {
+    //     return service.getAnnoncesVedettes();
+    // }
+
+    @GetMapping("/entreprix")
+    public List<Annonce> getAnnoncesEntrePrix( @RequestParam("min") double min, @RequestParam("max") Double max) {
+        return service.getAnnoncesEntrePrix(min, max);
+    }
     
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @PostMapping
