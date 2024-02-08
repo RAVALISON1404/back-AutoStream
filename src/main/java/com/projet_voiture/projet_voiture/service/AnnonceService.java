@@ -56,21 +56,9 @@ public class AnnonceService {
         return repository.findAllByOrderByDatepubAsc();
     }
 
-    // public List<Annonce> getAnnoncesVoituresAnciennes() {
-    //     return repository.findAnnoncesWithVoitureOrderByVoitureDatesortieAsc();
-    // }
-
-    // public List<Annonce> getAnnoncesVoituresRecentes() {
-    //     return repository.findAnnoncesWithVoitureOrderByVoitureDatesortieDesc();
-    // }
-
     public List<Annonce> getAnnoncesEntrePrix(double min, double max) {
         return repository.findByPrixGreaterThanEqualAndPrixLessThanEqualOrderByPrixAsc(min, max);
     }
-
-    // public List<Annonce> getAnnoncesVedettes() {
-    //     return repository.findFeaturedAnnoncesOrderByFavoriCountDesc();
-    // }
 
     @Transactional
     public Validation updateValidation(Validation ValidationRequest){

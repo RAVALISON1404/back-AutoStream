@@ -13,8 +13,11 @@ import com.projet_voiture.projet_voiture.repository.UtilisateurRepository;
 import com.projet_voiture.projet_voiture.service.MessageService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 
 
 @RestController
@@ -46,6 +49,30 @@ public class MessageController {
         }
 
         return null;
+    }
+    
+    
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    @GetMapping("/texted")
+    public List<Utilisateur> getTexted() {
+        String login = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
+        
+        List<Utilisateur> users = new ArrayList<>();
+        Optional<Utilisateur> utilisateurOptional = repository.findByEmail(login);
+        Utilisateur utilisateur = new Utilisateur();
+        if (utilisateurOptional.isPresent()) {
+
+            utilisateur = utilisateurOptional.get();
+            List<String> idtexted = service.getTexted(utilisateur.getIdutilisateur());
+            for (String id : idtexted) {
+                Optional<Utilisateur> user = repository.findById(id);
+                if (user.isPresent()) {
+                    users.add(user.get());
+                }
+            }
+            return users;
+        }
+        return users;
     }
 
     // @GetMapping
