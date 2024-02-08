@@ -29,6 +29,11 @@ public class UtilisateurController {
         return "Hello";
     }
 
+    @GetMapping("/email/{email}")
+    public Utilisateur findByEmail(@PathVariable String email) {
+        return service.findByEmail(email);
+    }
+
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(
             @RequestBody RegisterRequest request) {

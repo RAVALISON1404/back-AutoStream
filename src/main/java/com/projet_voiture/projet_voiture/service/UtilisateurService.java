@@ -24,6 +24,10 @@ public class UtilisateurService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    public Utilisateur findByEmail(String email) {
+        return repository.findByEmail(email).get();
+    }
+
     public Optional<Utilisateur> findByNameAndPassword(Utilisateur utilisateur) {
         System.out.println("tafididtra");
 
