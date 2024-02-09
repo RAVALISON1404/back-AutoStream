@@ -32,9 +32,13 @@ public class ValidationService {
         return repository.findByEtat(0).stream().map(v -> v.getAnnonce().getIdannonce()).collect(Collectors.toList());
     }
 
-    public List<Integer> getHistoriqueValidation() {
-        return repository.findByEtatNot(2).stream().map(v -> v.getAnnonce().getIdannonce()).collect(Collectors.toList());
+    public List<Validation> getHistoriqueValidation(String idutilisateur) {
+        return repository.findValidationsByAnnonceIdUtilisateur(idutilisateur);
     }
+
+    // public List<Integer> getHistoriqueValidation() {
+    //     return repository.findByEtatNot(2).stream().map(v -> v.getAnnonce().getIdannonce()).collect(Collectors.toList());
+    // }
 
     public List<Validation> findByEtat(int etat){
         return repository.findByEtat(etat);

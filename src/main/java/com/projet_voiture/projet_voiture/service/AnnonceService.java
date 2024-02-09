@@ -100,9 +100,9 @@ public class AnnonceService {
         return repository.findAllByIdannonceIn(validationService.getAllValidationIds());
     }
 
-    public List<Annonce> getHistorique(String idutilisateur) {
-        return repository.findByIdutilisateurAndIdannonceIn(idutilisateur, validationService.getHistoriqueValidation());
-    }
+    // public List<Annonce> getHistorique(String idutilisateur) {
+    //     return repository.findByIdutilisateurAndIdannonceIn(idutilisateur, validationService.getHistoriqueValidation());
+    // }
 
     public Annonce findById(int AnnonceId){
         return repository.findById(AnnonceId).get();

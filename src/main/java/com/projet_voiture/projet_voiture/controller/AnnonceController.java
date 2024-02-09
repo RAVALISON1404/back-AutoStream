@@ -33,13 +33,13 @@ public class AnnonceController {
 
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @GetMapping("/historique")
-    public List<Annonce> getHistorique() {
+    public List<Validation> getHistorique() {
         String login = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
         Optional<Utilisateur> utilisateurOptional = repository.findByEmail(login);
         Utilisateur utilisateur = new Utilisateur();
         if (utilisateurOptional.isPresent()) {
             utilisateur = utilisateurOptional.get();
-            return service.getHistorique(utilisateur.getIdutilisateur());
+            return servicevalidation.getHistoriqueValidation(utilisateur.getIdutilisateur());
         }
         return null;
     }

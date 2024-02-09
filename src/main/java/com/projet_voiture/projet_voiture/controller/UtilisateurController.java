@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.projet_voiture.projet_voiture.auth.AuthenticationRequest;
 import com.projet_voiture.projet_voiture.auth.RegisterRequest;
@@ -23,6 +24,14 @@ import java.util.Map;
 public class UtilisateurController {
     @Autowired
     private AuthenticationService authservice;
+
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    @GetMapping("/profil")
+    public Utilisateur getProfil() {
+        String login = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
+        Utilisateur utilisateur = service.findByEmail(login);
+        return utilisateur;
+    }
 
     @GetMapping("/hello")
     public String register() {
