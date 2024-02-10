@@ -11,6 +11,7 @@ public class NombreVoitureVenduParMois {
     
     private int anneeValidation;
     private int moisValidation;
-    private int nombreValidations;
+    private long nombreValidations;
+    
 
 }

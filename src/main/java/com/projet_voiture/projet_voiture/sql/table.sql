@@ -68,26 +68,26 @@ CREATE TABLE modele(
 
 create table voiture(
   idvoiture serial primary key,
-  nbplace integer,
-  nbporte integer,
-  kilometrage real,
-  cylindre real,
-  puissance real,
-  fumeur integer,
-  datesortie date,
-  idconduite integer references conduite (idconduite),
-  idmodele integer references modele (idmodele),
-  iddrivetype integer references drivetype (iddrivetype),
-  idtransmission integer references transmission (idtransmission),
-  idenergie integer references energie (idenergie),
-  idoptions text[],
-  photos text[]
+  -- nbplace integer,
+  -- nbporte integer,
+  -- kilometrage real,
+  -- cylindre real,
+  -- puissance real,
+  -- fumeur integer,
+  -- datesortie date,
+  -- idconduite integer references conduite (idconduite),
+  -- idmodele integer references modele (idmodele),
+  -- iddrivetype integer references drivetype (iddrivetype),
+  -- idtransmission integer references transmission (idtransmission),
+  -- idenergie integer references energie (idenergie),
+  -- idoptions text[],
+  -- photos text[]
 );
 
 create table annonce(
   idannonce serial primary key,
-  descri text,
-  prix real,
+  -- descri text,
+  -- prix real,
   datepub timestamp,
   idvoiture integer references voiture (idvoiture),
   idutilisateur varchar
@@ -138,3 +138,12 @@ create view v_gain_par_mois as
         annee, mois
     order by 
         extract(year from datemouvement) desc, extract(month from datemouvement) desc;
+
+
+select * from annonce order by datepub asc/desc
+-- select * from annonce where prix>=0 and prix<=1000000000000000000
+select * from annonce natural join voiture v order by v.datesortie desc/asc
+
+SELECT * FROM Annonce a WHERE a IN (SELECT f.annonce FROM Favori f) GROUP BY a ORDER BY COUNT(f) DESC
+
+select idannonce, count(idannonce) from annonce a natural join favori group by idannonce order by count(idannonce) desc

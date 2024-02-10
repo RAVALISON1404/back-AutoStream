@@ -49,20 +49,6 @@ public class ValidationService {
     }
 
     public List<NombreVoitureVenduParMois> getNombreVenteParMois() {
-        Aggregation aggregation = Aggregation.newAggregation(
-                Aggregation.match(Criteria.where("etat").is(3).and("datemodif").ne(null)),
-                Aggregation.project()
-                        .andExpression("year(datemodif)").as("anneeValidation")
-                        .andExpression("month(datemodif)").as("moisValidation"),
-                Aggregation.group("anneeValidation", "moisValidation").count().as("nombreValidations"),
-                Aggregation.project("anneeValidation", "moisValidation", "nombreValidations")
-                        .andExclude("_id"),
-                Aggregation.sort(Sort.Direction.DESC, "anneeValidation", "moisValidation")
-        );
-
-        AggregationResults<NombreVoitureVenduParMois> results = mongoTemplate.aggregate(
-                aggregation, "validation", NombreVoitureVenduParMois.class);
-
-        return results.getMappedResults();
+        return repository.getNombreValidationsParAnneeEtMois();
     }
 }
